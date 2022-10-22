@@ -2,7 +2,7 @@
 
 STATIC DEBUG_LOG_LEVEL Global_Level = 0;
 STATIC DEBUG_LOG_FILE* Global_DebugLofFileHandle = NULL;
-struct tm Global_Date;
+STATIC struct tm       Global_Date;
 
 
 CHAR DebugLogLevelStrings[NUMBER_OF_LEVELS][LEVEL_STRING_SIZE] =
@@ -80,11 +80,15 @@ VOID WriteDebugLog(DEBUG_LOG_LEVEL Level, const CHAR* Input, ...)
             break;
         }
 
-        if(Global_Level & Level == 0            &&
-           Level != DEBUG_LOGGING_INFO_LEVEL    &&
-           Level != DEBUG_LOGGING_WARNING_LEVEL &&
-           Level != DEBUG_LOGGING_ERROR_LEVEL   &&
-           Level != DEBUG_LOGGING_CRITICAL_LEVEL)
+        if((Level != DEBUG_LOGGING_INFO_LEVEL)    &&
+           (Level != DEBUG_LOGGING_WARNING_LEVEL) &&
+           (Level != DEBUG_LOGGING_ERROR_LEVEL)   &&
+           (Level != DEBUG_LOGGING_CRITICAL_LEVEL))
+        {
+            break;
+        }
+
+        if((Global_Level & Level) == 0)
         {
             break;
         }
@@ -111,7 +115,6 @@ VOID WriteDebugLog(DEBUG_LOG_LEVEL Level, const CHAR* Input, ...)
                 break;
             };
         }
-        printf("Index %d %s\n", Index, DebugLogLevelStrings[Index]);
 
         fprintf(Global_DebugLofFileHandle,
                 "%02dh:%02dmin:%02ds; %10s; %s\n",

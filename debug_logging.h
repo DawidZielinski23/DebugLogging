@@ -29,7 +29,8 @@ typedef int INT;
 #define DEBUG_LOGGING_ERROR_LEVEL    BIT(2)
 #define DEBUG_LOGGING_CRITICAL_LEVEL BIT(3)
 
-#define LOG_FUNCTION_NAME WriteDebugLog(DEBUG_LOGGING_INFO_LEVEL, "Function %s", __func__)
+#define LOG_FUNCTION_NAME(s) WriteDebugLog(DEBUG_LOGGING_INFO_LEVEL, "Function %s()", s)
+#define LOG_FUNCTION_END(s)  WriteDebugLog(DEBUG_LOGGING_INFO_LEVEL, "%s() ended", s)
 
 VOID OpenDebugFile();
 

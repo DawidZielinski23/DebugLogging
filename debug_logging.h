@@ -8,12 +8,8 @@
 #include<time.h>
 #include<windows.h>
 
-#define STATIC static
-
 typedef FILE DEBUG_LOG_FILE;
 typedef uint8_t DEBUG_LOG_LEVEL;
-typedef char CHAR;
-typedef int INT;
 
 #define BIT(_i) 1u<<_i
 
@@ -32,12 +28,9 @@ typedef int INT;
 #define LOG_FUNCTION_NAME(s) WriteDebugLog(DEBUG_LOGGING_INFO_LEVEL, "Function %s()", s)
 #define LOG_FUNCTION_END(s)  WriteDebugLog(DEBUG_LOGGING_INFO_LEVEL, "%s() ended", s)
 
-VOID OpenDebugFile();
-
-VOID CloseDebugFile();
-
-VOID SetGlobalDebugLevel(DEBUG_LOG_LEVEL Level);
-
-VOID WriteDebugLog(DEBUG_LOG_LEVEL Level, const CHAR* Input, ...);
+void OpenDebugFile();
+void CloseDebugFile();
+void SetGlobalDebugLevel(DEBUG_LOG_LEVEL Level);
+void WriteDebugLog(DEBUG_LOG_LEVEL Level, const char* Input, ...);
 
 #endif /*DEBUG_LOGGING_H*/

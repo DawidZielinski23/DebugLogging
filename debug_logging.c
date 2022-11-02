@@ -1,11 +1,11 @@
 #include"debug_logging.h"
 
-STATIC DEBUG_LOG_LEVEL Global_Level = 0;
-STATIC DEBUG_LOG_FILE* Global_DebugLofFileHandle = NULL;
-STATIC struct tm       Global_Date;
+static DEBUG_LOG_LEVEL Global_Level = 0;
+static DEBUG_LOG_FILE* Global_DebugLofFileHandle = NULL;
+static struct tm       Global_Date;
 
 
-CHAR DebugLogLevelStrings[NUMBER_OF_LEVELS][LEVEL_STRING_SIZE] =
+char DebugLogLevelStrings[NUMBER_OF_LEVELS][LEVEL_STRING_SIZE] =
 {
     "Info",
     "Warning",
@@ -13,15 +13,16 @@ CHAR DebugLogLevelStrings[NUMBER_OF_LEVELS][LEVEL_STRING_SIZE] =
     "Critical"
 };
 
-VOID OpenDebugFile()
+void OpenDebugFile()
 {
-    CHAR Name[DEBUG_FILE_NAME_LENGTH];
+    char Name[DEBUG_FILE_NAME_LENGTH];
     time_t Time = time(NULL);
-    Global_Date = *localtime(&Time);
-    INT Result;
+    int Result;
 
     do
     {
+        Global_Date = *localtime(&Time);
+
         Result = snprintf(Name,
                           DEBUG_FILE_NAME_LENGTH,
                           "debuglog_%02d_%02d-%02d_%02d.log",
@@ -44,7 +45,7 @@ VOID OpenDebugFile()
     } while(0);
 }
 
-VOID CloseDebugFile()
+void CloseDebugFile()
 {
     if(Global_DebugLofFileHandle != NULL)
     {
@@ -52,7 +53,7 @@ VOID CloseDebugFile()
     }
 }
 
-VOID SetGlobalDebugLevel(DEBUG_LOG_LEVEL Level)
+void SetGlobalDebugLevel(DEBUG_LOG_LEVEL Level)
 {
     if(Level > 0 && Level < MAX_DEBUG_LOG_LEVEL)
     {
@@ -64,13 +65,13 @@ VOID SetGlobalDebugLevel(DEBUG_LOG_LEVEL Level)
     }
 }
 
-VOID WriteDebugLog(DEBUG_LOG_LEVEL Level, const CHAR* Input, ...)
+void WriteDebugLog(DEBUG_LOG_LEVEL Level, const char* Input, ...)
 {
-    CHAR Log[MAX_DEBUG_LOG_SIZE] = {"\0"};
+    char Log[MAX_DEBUG_LOG_SIZE] = {"\0"};
     time_t Time = time(NULL);
     struct tm Date = *localtime(&Time);
-    INT Index = 0;
-    INT Result = 0;
+    int Index = 0;
+    int Result = 0;
     va_list args;
 
     do

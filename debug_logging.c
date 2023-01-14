@@ -55,7 +55,7 @@ void CloseDebugFile()
 
 void SetGlobalDebugLevel(DEBUG_LOG_LEVEL Level)
 {
-    if(Level > 0 && Level < MAX_DEBUG_LOG_LEVEL)
+    if(Level > 0 && Level =< MAX_DEBUG_LOG_LEVEL)
     {
         Global_Level = Level;
     }
@@ -114,7 +114,7 @@ void WriteDebugLog(DEBUG_LOG_LEVEL Level, const char* Input, ...)
             if(Level == BIT(Index))
             {
                 break;
-            };
+            }
         }
 
         fprintf(Global_DebugLofFileHandle,

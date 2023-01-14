@@ -8,7 +8,8 @@ There are 4 levels of logs:
 - Information,
 - Warning,
 - Error,
-- Critical
+- Critical.
+
 The user could adjust which logs are seen in the file by calling SetGlobalDebugLevel() function
 with proper level value in range from 1 to 15.
 The debug file is open by OpenDebugFile() fuction and closed by CloseDebugFile() function.

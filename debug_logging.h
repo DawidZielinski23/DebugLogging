@@ -6,7 +6,7 @@
 #include<stdint.h>
 #include<stdarg.h>
 #include<time.h>
-#include<windows.h>
+#include<stdbool.h>
 
 typedef FILE DEBUG_LOG_FILE;
 typedef uint8_t DEBUG_LOG_LEVEL;
@@ -32,5 +32,6 @@ void OpenDebugFile();
 void CloseDebugFile();
 void SetGlobalDebugLevel(DEBUG_LOG_LEVEL Level);
 void WriteDebugLog(DEBUG_LOG_LEVEL Level, const char* Input, ...);
+bool IsDebugLogFileOpen();
 
 #endif /*DEBUG_LOGGING_H*/

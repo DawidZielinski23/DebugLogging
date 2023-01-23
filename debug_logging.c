@@ -1,9 +1,9 @@
 #include"debug_logging.h"
 
 static DEBUG_LOG_LEVEL Global_Level = 0;
-static DEBUG_LOG_FILE* Global_DebugLofFileHandle = NULL;
+static DEBUG_LOG_FILE* Global_DebugLogFileHandle = NULL;
 static struct tm       Global_Date;
-
+static bool            Global_DebugFileOpened = false;
 
 char DebugLogLevelStrings[NUMBER_OF_LEVELS][LEVEL_STRING_SIZE] =
 {
@@ -37,19 +37,23 @@ void OpenDebugFile()
             break;
         }
 
-        Global_DebugLofFileHandle = fopen(Name, WRITE_FILE);
-        if(Global_DebugLofFileHandle == NULL)
+        Global_DebugLogFileHandle = fopen(Name, WRITE_FILE);
+        if(Global_DebugLogFileHandle == NULL)
         {
             printf("Failed to open file");
+        }
+        else
+        {
+            Global_DebugFileOpened = true;
         }
     } while(0);
 }
 
 void CloseDebugFile()
 {
-    if(Global_DebugLofFileHandle != NULL)
+    if(Global_DebugLogFileHandle != NULL)
     {
-        fclose(Global_DebugLofFileHandle);
+        fclose(Global_DebugLogFileHandle);
     }
 }
 
@@ -94,7 +98,7 @@ void WriteDebugLog(DEBUG_LOG_LEVEL Level, const char* Input, ...)
             break;
         }
 
-        if(Global_DebugLofFileHandle == NULL)
+        if(Global_DebugLogFileHandle == NULL)
         {
             break;
         }
@@ -117,7 +121,7 @@ void WriteDebugLog(DEBUG_LOG_LEVEL Level, const char* Input, ...)
             }
         }
 
-        fprintf(Global_DebugLofFileHandle,
+        fprintf(Global_DebugLogFileHandle,
                 "%02dh:%02dmin:%02ds; %10s; %s\n",
                 Date.tm_hour - Global_Date.tm_hour,
                 Date.tm_min - Global_Date.tm_min,
@@ -127,4 +131,9 @@ void WriteDebugLog(DEBUG_LOG_LEVEL Level, const char* Input, ...)
 
         va_end(args);
     } while(0);
+}
+
+bool IsDebugLogFileOpen()
+{
+    return Global_DebugFileOpened;
 }

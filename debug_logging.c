@@ -21,6 +21,11 @@ void OpenDebugFile()
 
     do
     {
+        if(Global_DebugFileOpened == true)
+        {
+            break;
+        }
+
         Global_Date = *localtime(&Time);
 
         Result = snprintf(Name,
@@ -51,9 +56,10 @@ void OpenDebugFile()
 
 void CloseDebugFile()
 {
-    if(Global_DebugLogFileHandle != NULL)
+    if((Global_DebugLogFileHandle != NULL) && (Global_DebugFileOpened == true))
     {
         fclose(Global_DebugLogFileHandle);
+        Global_DebugLogFileHandle = NULL;
     }
 }
 
